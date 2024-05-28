@@ -184,10 +184,11 @@ start_tproxy() {
 
   # Skip traffic already handled by TProxy
   # If the interface of the default route has a public IPv4 or IPv6 address assigned by the ISP, omitting these rules will result in abnormal proxy behavior for local traffic, which may cause the entire network to run slower
-  ${iptables} -t mangle -A BOX_EXTERNAL -p tcp -m socket --transparent -j MARK --set-xmark ${mark_id}
-  ${iptables} -t mangle -A BOX_EXTERNAL -p udp -m socket --transparent -j MARK --set-xmark ${mark_id}
-  ${iptables} -t mangle -A BOX_EXTERNAL -m socket -j RETURN
-
+  ###########################################################In order to be compatible with sing-box##############################
+  # ${iptables} -t mangle -A BOX_EXTERNAL -p tcp -m socket --transparent -j MARK --set-xmark ${mark_id}
+  # ${iptables} -t mangle -A BOX_EXTERNAL -p udp -m socket --transparent -j MARK --set-xmark ${mark_id}
+  # ${iptables} -t mangle -A BOX_EXTERNAL -m socket -j RETURN
+  ###########################################################In order to be compatible with sing-box##############################
   if [ "${bin_name}" = "clash" ] ; then
     ${iptables} -t mangle -A BOX_EXTERNAL -p tcp --dport 53 -j RETURN
     ${iptables} -t mangle -A BOX_EXTERNAL -p udp --dport 53 -j RETURN
